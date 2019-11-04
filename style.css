@@ -1,0 +1,71 @@
+html {
+	height: 100%;
+}
+
+body {
+  	margin: 0px;
+  	height: 100%;
+  	color: #ffecdb;
+}
+
+h1{
+	margin-block-start: 0;
+	font-size: 30px;
+}
+
+p {
+	font-size: 1em;
+}
+
+section {
+	padding: 20px 20px;
+	background-color: #076324;
+	height: 100%;
+}
+
+#section2 {
+	display: none;
+	
+}
+/*
+#section1{
+	
+}
+*/
+input {
+	width: 10%;
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid lightgreen;
+}
+
+input:hover{
+	border-bottom: 2px solid green;
+}
+input:focus {
+	outline: none;
+	border-bottom: 2px solid darkgreen;
+}
+
+#pokerTable {
+	margin: auto;
+	display: flex;
+	width: 90%;
+	height: 50vh;
+	border: 2px solid white;
+	border-radius: 50%;
+}
+.card {
+	width: 15%;
+	height: 70%;
+	border: 1px solid white;
+	margin: auto 0px;
+}
+#currentCard{
+	margin-left: auto;
+	margin-right: 5%;
+}
+#nextCard {
+	margin-left: 5%;
+	margin-right: auto;
+}

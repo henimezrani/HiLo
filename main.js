@@ -1,3 +1,29 @@
+// ----------------------- Main Jquery selectors
+$input = $('input#username');
+$playButton = $('button#play');
+$section1 = $('section#section1')
+$section2 = $('section#section2')
+// ----------------------- Global variables and methods to play the game
+
+
+
+$playButton.on("click", function() {
+	var userName=$input.val();
+	var start = new Date();
+	var startTime = start.toLocaleTimeString('fr-FR', {hour: "numeric", minute: "numeric", second: "numeric"})
+	var numberOfGames=0;
+	var scores=[];
+	function complete() {
+		$section2.fadeIn(1000);
+	}
+	$section1.fadeOut(1000, "swing" ,complete);
+	$section2.prepend("<h1>Hi "+ userName + "!</hi>")
+	
+})
+
+// ----------------------- Main classes to be used by the game
+var suits = ["spades", "clubs","heart", "diamonds"];
+
 function Card( number, suit) {
 	var card ={};
 	card.number = number;
@@ -22,8 +48,6 @@ var display = function() {
 	}
 }
 
-var suits = ["spades", "clubs","heart", "diamonds"];
-
 function Deck() {
 	var deck={}
 	deck.cards = [];
@@ -33,9 +57,6 @@ function Deck() {
 		}
 	}
 	deck.shuffle = shuffle
-
-
-
 	return deck;
 }
 
@@ -52,13 +73,6 @@ var shuffle = function() {
 function generateRandomIndex(min, max) { // maximum not included
 	return Math.floor(Math.random() * (max - min)) + min;
 }
-
-//////////////////////
-var userName=window.prompt();
-var start = new Date()
-var startTime = start.toLocaleTimeString('fr-FR', {hour: "numeric", minute: "numeric", second: "numeric"})
-var numberOfGames=0;
-var scores=[];
 
 function playGame() {
 	var deck=Deck();
@@ -118,11 +132,12 @@ function playGame() {
 	}
 }
 
+// ----------------------- Statistics Functions
+
 function resetStats() {
 	scores=[];
 	numberOfGames=0;
 	playTime = 0
-
 }
 
 function convertTime(end, start) {
@@ -164,6 +179,7 @@ function getAvgScore() {
 		return a+b
 	},0)/scores.length
 }
+
 function getHighScore() {
 	return scores.reduce(function(a,b){
 		if(a>b){
