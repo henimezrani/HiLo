@@ -54,11 +54,12 @@ function generateRandomIndex(min, max) { // maximum not included
 }
 
 //////////////////////
-
-var startDate = new Date()
-var startTime = startDate.toLocaleTimeString('fr-FR', {hour: "numeric", minute: "numeric", second: "numeric"})
+var userName=window.prompt();
+var start = new Date()
+var startTime = start.toLocaleTimeString('fr-FR', {hour: "numeric", minute: "numeric", second: "numeric"})
 var numberOfGames=0;
 var scores=[];
+
 function playGame() {
 	var deck=Deck();
 	numberOfGames++
@@ -123,3 +124,52 @@ function resetStats() {
 	playTime = 0
 
 }
+
+function convertTime(end, start) {
+	var str = "";
+
+	var resSec = Number(end.slice(6)) - Number(start.slice(6));
+	var resMin = Number(end.slice(3,5)) - Number(start.slice(3,5));
+	var resHr = Number(end.slice(0,2)) - Number(start.slice(0,2));
+
+	if (resMin < 0) {
+		resMin += 60;
+		resHr-- ;
+	}
+
+	if (resSec < 0) {
+		resSec += 60;
+		resMin --;
+	}
+
+	if (resHr !== 0){
+		str += resHr + "hr "
+	}
+	if (resMin !== 0){
+		str += resMin + "min "
+	}
+	str += resSec + "s."
+
+	return str
+}
+
+function generatePlayTime() {
+	var end = new Date()
+	var endTime = end.toLocaleTimeString('fr-FR', {hour: "numeric", minute: "numeric", second: "numeric"})
+	return convertTime(endTime ,startTime)
+}
+
+function getAvgScore() {
+	return scores.reduce(function(a,b){
+		return a+b
+	},0)/scores.length
+}
+function getHighScore() {
+	return scores.reduce(function(a,b){
+		if(a>b){
+			return a
+		}
+		return b
+	},)
+}
+
