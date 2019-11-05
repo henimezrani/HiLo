@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <style>
+        .card {
+            position: relative;
+            width: 127px;
+            height: 178px;
+        }
+        
+        .card .back {
+            width: 120px;
+            height: 183px;
+            position: absolute;
+            -webkit-transform: rotateX(0deg) rotateY(0deg);
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            transition: all 1s ease-in-out;
+            -webkit-transition: all 1s ease-in-out;
+        }
+        
+        .card.flip .back {
+            z-index: 9;
+            -webkit-transform: rotateY(180deg);
+        }
+        
+        #card .front {
+            background-image: url('assets/PNG/AC.png');
+            position: absolute;
+            width: 120px;
+            height: 183px;
+            -webkit-transform: rotateY(-180deg);
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            transition: all 1s ease-in-out;
+            -webkit-transition: all 1s ease-in-out;
+        }
+        
+        #card.flip .front {
+            z-index: 10;
+            -webkit-transform: rotateX(0deg) rotateY(0deg);
+        }
+        
+        #imgBack {
+            background-image: url("assets/card-back.png");
+            width: 120px;
+            height: 183px;
+        }
+        
+        #imgFront {
+            background-image: url("assets/PNG/AC.png");
+            width: 120px;
+            height: 183px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="card">
+        <div class="front">
+            <img id="imgFront">
+        </div>
+        <div class="back">
+            <img id="imgBack">
+        </div>
+    </div>
+    <br /><br />
+    <button class="rotate">Rotate</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+    </script>
+</body>
+
+</html>
