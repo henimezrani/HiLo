@@ -1,28 +1,59 @@
 // ----------------------- Main Jquery selectors
-$input = $('input#username');
-$playButton = $('button#play');
-$section1 = $('section#section1');
-$section2 = $('section#section2');
+var $input = $('input#username');
+var $playButton = $('button#play');
+var $section1 = $('section#section1');
+var $section2 = $('section#section2');
+var $main1 = $('#main1');
+var $main2 = $('#main2');
+var $header = $('#header');
+var $footer = $('#footer');
+var $currentCard = $('#currentCard');
+var $nextCard = $('#nextCard');
+var $h1 = $('#welcomeName');
+var $start = $('#start');
+var windowWidth = window.innerWidth
+var midMargin = (windowWidth / 100) * 5;
+var cardWidth = (windowWidth / 100) * (120 / windowWidth) * 100;
+var outerMargin = (windowWidth - 2 * (midMargin + cardWidth)) / 2;
+var $ccimgFront = $('#ccimgFront');
+var $ncimgFront = $('#ncimgFront');
+var $ncimgBack = $('#ncimgBack');
+var $higher = $('#higher');
+var $lower = $('#lower');
+var $equal = $('#equal');
+var $bet5 = $('#bet5');
+var $bet10 = $('#bet10');
+var $bet50 = $('#bet50');
+var $bet100 = $('#bet100');
+var $betAllIn = $('#betAllIn');
+var $balanceN = $('#balanceN');
+var $streak = $('#streak');
+var $highestStreak = $('#highestStreak');
+var $reset = $('#reset');
+var $playTime = $('#playTime');
+
+var leftCC = windowWidth / 2 - midMargin - 3 * cardWidth / 2
+var leftNC = windowWidth / 2 + midMargin - cardWidth / 2
 
 
-/*
-After calculations, position of next card 732, positon of current card 494, Dx = -238
+$nextCard.css("left", leftNC + "px")
+$currentCard.css("left", leftCC + "px")
 
-*/
 
-// $flip = $("#nextCard").toggleClass('flip');
-// $(".front").animate({ "left": "-=238px" }, "slow" );
 
 // ----------------------- Global variables and methods to play the game
 var startTime;
 var numberOfGames;
 var scores;
+var input = "";
+var suits = ["spades", "clubs", "heart", "diamonds"];
 
-
+// Switch from section 1 to section 2
 $playButton.on("click", function() {
     var userName = $input.val();
     var start = new Date();
-    startTime = start.toLocaleTimeString('fr-FR', { hour: "numeric", minute: "numeric", second: "numeric" })
+    startTime = start.toLocaleTimeString('fr-FR', { hour: "numeric", minute: "numeric", second: "numeric" });
+    displayTime();
     numberOfGames = 0;
     scores = [];
 
@@ -30,12 +61,20 @@ $playButton.on("click", function() {
         $section2.fadeIn(1000);
     }
     $section1.fadeOut(1000, "swing", complete);
-    $section2.prepend("<h1>Hi " + userName + "!</hi>")
+    $h1.text("Hi " + userName + "!")
 
 })
 
+
+$start.on('click', function() {
+    playGame()
+})
+
+
+
+
 // ----------------------- Main classes to be used by the game
-var suits = ["spades", "clubs", "heart", "diamonds"];
+
 
 function Card(number, suit, url) {
     var card = {};
@@ -91,57 +130,175 @@ function generateRandomIndex(min, max) { // maximum not included
 
 function playGame() {
     var deck = Deck();
+    var balance = 1000;
+    $balanceN.html('<h3>' + balance + '</h3>')
+    var bet = 0;
+    console.log(deck)
     numberOfGames++
-
     deck.shuffle();
     var currentCard = deck.cards[0];
     var nextCard = deck.cards[1];
     var score = 0;
-
     var count = 0;
-    while (score < 52) {
-        alert(currentCard.display());
-        var input = window.prompt()
-        if (input === "Equal") {
-            if (nextCard.number === currentCard.number) {
-                count++
-                score += 10
-                currentCard = deck.cards[count];
-                nextCard = deck.cards[count + 1];
 
-            } else {
-                alert("you lost . Your score is " + score)
-                scores.push(score)
-                break
-            }
-        } else if (input === "higher") {
-            if (nextCard.number >= currentCard.number) {
-                count++
-                score++
-                currentCard = deck.cards[count];
-                nextCard = deck.cards[count + 1];
+    return guess();
 
-            } else {
-                alert("you lost . Your score is " + score)
-                scores.push(score)
-                break
-            }
-        } else if (input === "lower") {
-            if (nextCard.number <= currentCard.number) {
-                score++
-                count++
-                currentCard = deck.cards[count];
-                nextCard = deck.cards[count + 1];
+    function guess() {
 
+        $ncimgFront.css('background-image', "url(" + currentCard.url + ")")
+        $flip = $("#nextCard").toggleClass('flip');
+        $(".front").animate({ "left": "-=" + (midMargin * 3 + cardWidth) + "px" }, "2000");
+        $(".back").animate({ "left": "-=" + (midMargin * 3 + cardWidth) + "px" }, "2000");
+
+        $reset.on('click', function() {
+            resetStats();
+            $nextCard.css("left", leftNC + "px")
+            $currentCard.css("left", leftCC + "px")
+        })
+
+        $bet5.on('click', function() {
+            if (balance - bet <= 0) {
+                alert('You cannot bet more than your balance')
             } else {
-                alert("you lost . Your score is " + score)
-                scores.push(score)
-                break
+                bet += 5;
+                balance -= 5;
+                $balanceN.html('<h3>' + balance + '</h3>')
             }
-        } else {
-            alert("invalid input")
+        })
+
+        $bet10.on('click', function() {
+            if (balance - bet <= 0) {
+                alert('You cannot bet more than your balance')
+            } else {
+                bet += 10;
+                balance -= 10;
+                $balanceN.html('<h3>' + balance + '</h3>')
+            }
+        })
+
+        $bet50.on('click', function() {
+            if (balance - bet <= 0) {
+                alert('You cannot bet more than your balance')
+            } else {
+                bet += 50;
+                balance -= 50;
+                $balanceN.html('<h3>' + balance + '</h3>')
+            }
+        })
+
+        $bet100.on('click', function() {
+            if (balance - bet <= 0) {
+                alert('You cannot bet more than your balance')
+            } else {
+                bet += 100;
+                balance -= 100;
+                $balanceN.html('<h3>' + balance + '</h3>')
+            }
+        })
+
+        $betAllIn.on('click', function() {
+            bet += balance;
+            balance = 0;
+            $balanceN.html('<h3>' + balance + '</h3>')
+        })
+
+        $higher.on('click', function() {
+            if (bet === 0) {
+                alert("you need to make an initial bet")
+            } else {
+                input = "Higher";
+                animate();
+                check();
+            }
+        })
+        $lower.on('click', function() {
+            if (bet === 0) {
+                alert("you need to make an initial bet")
+            } else {
+                input = "Lower";
+                animate();
+                check();
+            }
+        })
+        $equal.on('click', function() {
+            if (bet === 0) {
+                alert("you need to make an initial bet")
+            } else {
+                input = "Equal";
+                animate();
+                check();
+            }
+        })
+
+        function animate() {
+            setTimeout(function() {
+                $(".front").show();
+                $(".back").show();
+            }, 1000);
+            setTimeout(function() { $ccimgFront.css('background-image', "url(" + currentCard.url + ")") }, 1000);
+            setTimeout(function() { $ccimgFront.show() }, 1000);
+            setTimeout(function() {
+                $(".front").hide();
+                $(".back").hide();
+            }, 1000);
+
+            setTimeout(function() {
+                $(".front").animate({ "left": "+=" + (midMargin * 3 + cardWidth) + "px" }, "2000");
+                $(".back").animate({ "left": "+=" + (midMargin * 3 + cardWidth) + "px" }, "2000");
+            }, 4000);
+            setTimeout(function() { $flip = $("#nextCard").toggleClass('flip'); }, 4000);
+        }
+
+        function check() {
+            if (input === "Equal") {
+                if (nextCard.number === currentCard.number) {
+                    alert("You guessed right")
+                    score++;
+                    balance += 2 * bet;
+
+                } else {
+                    alert("You guessed wrong")
+                    scores.push(score);
+                    score = 0;;
+                }
+            } else if (input === "Higher") {
+                if (nextCard.number >= currentCard.number) {
+                    alert("You guessed right")
+                    score++;
+                    balance += 2 * bet;
+
+                } else {
+                    alert("You guessed wrong")
+                    scores.push(score);
+                    score = 0;
+                }
+            } else if (input === "Lower") {
+                if (nextCard.number <= currentCard.number) {
+                    alert("You guessed right")
+                    score++
+                    balance += 2 * bet;
+
+                } else {
+                    alert("You guessed wrong")
+                    scores.push(score);
+                    score = 0;
+                }
+            }
+            currentCard = deck.cards[count];
+            nextCard = deck.cards[count + 1];
+            count++;
+            bet = 0;
+            $balanceN.html('<h3>' + balance + '</h3>')
+
+            $streak.html(score);
+            $highestStreak.html(getHighScore());
+
+            if (balance === 0) {
+                alert("You lost! Good luck next time!")
+            }
         }
     }
+
 }
 
 // ----------------------- Statistics Functions
@@ -150,6 +307,9 @@ function resetStats() {
     scores = [];
     numberOfGames = 0;
     playTime = 0
+    var start = new Date();
+    startTime = start.toLocaleTimeString('fr-FR', { hour: "numeric", minute: "numeric", second: "numeric" })
+    playGame();
 }
 
 function convertTime(end, start) {
@@ -180,16 +340,20 @@ function convertTime(end, start) {
     return str
 }
 
+function displayTime() {
+
+    setInterval(function() {
+        var end = new Date();
+        endTime = end.toLocaleTimeString('fr-FR', { hour: "numeric", minute: "numeric", second: "numeric" })
+
+        $playTime.html(convertTime(endTime, startTime))
+    }, 1000);
+}
+
 function generatePlayTime() {
     var end = new Date()
     var endTime = end.toLocaleTimeString('fr-FR', { hour: "numeric", minute: "numeric", second: "numeric" })
     return convertTime(endTime, startTime)
-}
-
-function getAvgScore() {
-    return scores.reduce(function(a, b) {
-        return a + b
-    }, 0) / scores.length
 }
 
 function getHighScore() {

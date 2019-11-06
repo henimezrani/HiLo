@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -34,6 +35,10 @@ section {
 }
 */
 
+#main2 {
+    height: 100%;
+}
+
 input {
     width: 10%;
     background-color: transparent;
@@ -50,6 +55,18 @@ input:focus {
     border-bottom: 2px solid darkgreen;
 }
 
+#header {
+    height: 20%;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+#footer {
+    height: 20%;
+    margin-top: 10px;
+    display: flex;
+}
+
 #pokerTable {
     margin: auto;
     display: flex;
@@ -63,20 +80,36 @@ input:focus {
     width: 120px;
     height: 183px;
     border: 1px solid white;
-    margin: auto 0px;
+    margin: 8% 0px;
     border-radius: 10px;
 }
 
 #currentCard {
-    /*position: absolute;
-    left: 300px;*/
+    position: absolute;
+    left: 0px;
     margin-left: auto;
     margin-right: 5%;
+    background-image: url("");
+}
+
+#currentCard .back {
+    width: 120px;
+    height: 183px;
+    position: absolute;
+    border-radius: 10px;
+}
+
+#currentCard .front2 {
+    position: absolute;
+    left: 0px;
+    width: 120px;
+    height: 183px;
+    border-radius: 10px;
 }
 
 #nextCard {
-    /*position: absolute;
-    left: 500px;*/
+    position: absolute;
+    left: 0px;
     background-image: url("assets/card-back.png");
     border-bottom: 4px solid #b71c1ced;
     border-right: 2px solid #b71c1ced;
@@ -90,11 +123,12 @@ input:focus {
     width: 120px;
     height: 183px;
     position: absolute;
+    left: 0px;
     -webkit-transform: rotateX(0deg) rotateY(0deg);
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
-    transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out;
+    transition: all 2s ease-in-out;
+    -webkit-transition: all 2s ease-in-out;
     border-radius: 10px;
 }
 
@@ -104,14 +138,14 @@ input:focus {
 
 #nextCard .front {
     position: absolute;
-    left: 732px;
+    left: 0px;
     width: 120px;
     height: 183px;
     -webkit-transform: rotateY(-180deg);
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
-    transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out;
+    transition: all 2s ease-in-out;
+    -webkit-transition: all 2s ease-in-out;
     border-radius: 10px;
 }
 
@@ -120,16 +154,118 @@ input:focus {
     border-radius: 10px;
 }
 
-#imgBack {
+#ncimgBack {
     background-image: url("assets/card-back.png");
     width: 120px;
     height: 183px;
     border-radius: 10px;
 }
 
-#imgFront {
-    background-image: url("assets/1C.png");
+#ncimgFront {
+    background-image: url("");
     width: 120px;
     height: 183px;
     border-radius: 10px;
+}
+
+#ccimgFront {
+    background-image: url("");
+    width: 120px;
+    height: 183px;
+    border-radius: 10px;
+}
+
+.topDiv {
+    width: 33.3%;
+    height: 100%;
+}
+
+#div1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tmp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#div2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#div3 {
+    display: relative;
+}
+
+#welcomeName {
+    width: 100%;
+    text-align: center;
+}
+
+#balancePH {
+    display: inline-block;
+    position: relative;
+    border: 2px solid white;
+    text-align-last: center;
+    height: 30%;
+    line-height: 0;
+    width: 30%;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+#balanceN {
+    display: inline-block;
+    position: relative;
+    border: 2px solid white;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    line-height: 0;
+    height: 30%;
+    text-align-last: center;
+    width: 60%;
+}
+
+button {
+    background-color: transparent;
+    color: white;
+    font-size: 1em;
+    border: 2px solid white;
+    border-radius: 40px;
+    padding: 15px 25px;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #076324;
+    font-weight: bold;
+    background-color: white;
+}
+
+.bottomDiv {
+    width: 33.3%;
+    height: 100%;
+}
+
+#div11 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#div22 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#div33 {
+    display: relative;
 }
